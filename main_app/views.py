@@ -11,6 +11,7 @@ import base64
 import time
 import blind_coding.settings as settings
 
+
 def default(request):
 	return render(request,'loggedIn.html')
 
@@ -48,14 +49,14 @@ def question(request):
 
 def runCode(request):
 	postData = json.loads( request.body.decode('utf-8') )
-	url = 'http://165.232.133.80:2358/submissions?base64_encoded=false&wait=true'
+	url = 'http://165.232.133.80:2358/submissions?base64_encoded=false&wait=false'
 	que = Question.objects.get(qno=postData['qNo'])
 	stdin = '6'+'\n'+que.test_case1+'\n'+que.test_case2+'\n'+que.test_case3+'\n'+que.test_case4+'\n'+que.test_case5+'\n'+que.test_case6
 	# postData['stdin'] = str(base64.b64encode(stdin.encode("utf-8")))
 	postData['stdin'] = stdin
 	# postData['source_code'] = str(base64.b64encode(postData['source_code'].encode('utf-8')))
 	print(postData)
-	response = requests.post(url,json=postData)
+	response = requests.post(url , json=postData)	
 	resp = response.json()
 	print(resp)
 	# resp = json.loads(resp)
@@ -69,7 +70,7 @@ def runCode(request):
 		if resp['status']['description'] == "Processing":
 			while resp['status']['description'] == "Processing":
 				resp = requests.get(url2).json()
-	print(resp+"esp")
+	print(resp)
 	# print('exit_code ',resp['exit_code'])
 	# print('exit_signal ',resp['exit_signal'])
 	# print( str(base64.b64decode(resp['stderr'].encode('utf-8').strip()), "utf-8") )
@@ -87,6 +88,7 @@ def runCode(request):
 		else:
 			res['stdout'] = 'error'
 	else:
+		# no errors till now, check answer
 		quesNo = postData['qNo']
 		quesData = Question.objects.get(qno= quesNo)
 		answer = quesData.test_case1_sol+'\n'+quesData.test_case2_sol+'\n'+quesData.test_case3_sol+'\n'+quesData.test_case4_sol+'\n'+quesData.test_case5_sol+'\n'+quesData.test_case6_sol+'\n'
@@ -116,8 +118,10 @@ def runCode(request):
 			timepenalty.no_wa+=1
 			res['stdout'] = 'Wrong answer..'
 			timepenalty.save()
+	
 	currUser.save()
 	res['score'] = currUser.score
+	print(res['score'])
 	if currUser.answerGiven == "11111":
 		res['completedGame'] = 'true'
 	else:

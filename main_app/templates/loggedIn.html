@@ -168,11 +168,11 @@
 
 
     <script>
-		/*!function () {
+		!function () {
 			function detectDevTool(allow) {
 				if (isNaN(+allow)) allow = 100;
 				var start = +new Date();
-				//debugger;
+				debugger;
 				var end = +new Date();
 				if (isNaN(start) || isNaN(end) || end - start > allow) {
 				}
@@ -194,7 +194,7 @@
 				window.addEventListener('focus', detectDevTool);
 				window.addEventListener('blur', detectDevTool);
 			}
-		}();*/
+		}();
 	</script>
 </body>
 </html>
