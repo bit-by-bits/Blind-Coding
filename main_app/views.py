@@ -48,7 +48,7 @@ def question(request):
 
 def runCode(request):
 	postData = json.loads( request.body.decode('utf-8') )
-	url = 'http://143.198.238.205:2358/submissions?base64_encoded=false&wait=false'
+	url = 'http://165.232.133.80:2358/submissions?base64_encoded=false&wait=true'
 	que = Question.objects.get(qno=postData['qNo'])
 	stdin = '6'+'\n'+que.test_case1+'\n'+que.test_case2+'\n'+que.test_case3+'\n'+que.test_case4+'\n'+que.test_case5+'\n'+que.test_case6
 	# postData['stdin'] = str(base64.b64encode(stdin.encode("utf-8")))
@@ -62,14 +62,14 @@ def runCode(request):
 	print('qNo',postData['qNo'])
 	print('response token: ',resp['token'])
 
-	url2 = 'http://143.198.238.205:2358/submissions/'+resp['token']+'?base64_encoded=false'
+	url2 = 'http://165.232.133.80:2358/submissions/'+resp['token']+'?base64_encoded=false'
 	time.sleep(1)
 	resp = requests.get(url2).json()
 	if 'status' in resp:
 		if resp['status']['description'] == "Processing":
 			while resp['status']['description'] == "Processing":
 				resp = requests.get(url2).json()
-	print(resp)
+	print(resp+"esp")
 	# print('exit_code ',resp['exit_code'])
 	# print('exit_signal ',resp['exit_signal'])
 	# print( str(base64.b64decode(resp['stderr'].encode('utf-8').strip()), "utf-8") )
