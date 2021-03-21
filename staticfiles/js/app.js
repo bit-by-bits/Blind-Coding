@@ -54,7 +54,7 @@ function leaderbInit(){
   });
 }
 function disableCopyPaste(){
-  /*var inp = document.getElementsByClassName('noselect')[0];
+  var inp = document.getElementsByClassName('noselect')[0];
   inp.addEventListener('select', function() {
     this.selectionStart = this.selectionEnd;
   }, false);
@@ -67,20 +67,19 @@ function disableCopyPaste(){
         if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
     });
 
-    $(".no-copy-paste").keydown(function(e) {
-        // console.log('Key pressed inside editor: ', e.keyCode);
-        if(ctrlDown && (e.keyCode == cKey))
-        { 
-          console.log("Document catch Ctrl+C");
-        }
-        if(ctrlDown && (e.keyCode == vKey)){
-          console.log("Document catch Ctrl+V");
-        }
-        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)){
-          // console.log('copy-paste');
-          return false;
-       }
-    });*/
+  $(".no-copy-paste").keydown(function (e) {
+    // console.log('Key pressed inside editor: ', e.keyCode);
+    if (ctrlDown && (e.keyCode == cKey)) {
+      console.log("Document catch Ctrl+C");
+    }
+    if (ctrlDown && (e.keyCode == vKey)) {
+      console.log("Document catch Ctrl+V");
+    }
+    if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
+      // console.log('copy-paste');
+      return false;
+    }
+  });
 }
 
 function populateLangs()
