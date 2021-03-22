@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,45 +8,53 @@
     <title>Blind Coding: A Coding Club event for APOGEE</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
     <link href="../../static/css/style.css" rel="stylesheet" type="text/css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
+
 <body>
-        <img src="../../static/assets/apogeeLogo.png" id="apogeeLogo">
-        <div class="backdrop">
-            </div>
-            <div class="instructions">
-				<div id="close" onclick="closeInstructions()">
-					<span class="horiz"></span>
-					<span class="verti"></span>
-				</div>
-				<h3>Instructions</h3>
-				<h5>- There are five questions of varying difficulties and points associated with them. <br> Score associated are 20, 40, 60, 80, 100 points respectively.</h5>
-				<h5>- For every question, the first time you submit the correct answer, you are awarded points corresponding to that question and the time penalty is 
-					also calculated which takes into consideration the time taken until last successful solve together with the number of wrong attempts</h5>
-				<h5>- Standings will be based on the points scored and in cases of clashes, time penalties are compared and one with lesser time penalty is better ranker</h5>
-				<h5>- Every time you give a correct answer, the question is automatically changed and code editor is reset.</h5>
-				<h5>- You have only two attempts throughout the event to see the code you have written. To see the code, press Show Code button near Run button.</h5>
-				<h5>- Don't try to open up the console or changing the window/tab. You'll be logged out immediately</h5>
-			</div>
+    <img src="../../static/assets/apogeeLogo.png" id="apogeeLogo">
+    <div class="backdrop">
+    </div>
+    <div class="instructions">
+        <div id="close" onclick="closeInstructions()">
+            <span class="horiz"></span>
+            <span class="verti"></span>
+        </div>
+        <h3>Instructions</h3>
+        <h5>- There are five questions of varying difficulties and points associated with them. <br> Score associated
+            are 20, 40, 60, 80, 100 points respectively.</h5>
+        <h5>- For every question, the first time you submit the correct answer, you are awarded points corresponding to
+            that question and the time penalty is
+            also calculated which takes into consideration the time taken until last successful solve together with the
+            number of wrong attempts</h5>
+        <h5>- Standings will be based on the points scored and in cases of clashes, time penalties are compared and one
+            with lesser time penalty is better ranker</h5>
+        <h5>- Every time you give a correct answer, the question is automatically changed and code editor is reset.</h5>
+        <h5>- You have only two attempts throughout the event to see the code you have written. To see the code, press
+            Show Code button near Run button.</h5>
+        <h5>- Don't try to open up the console or changing the window/tab. You'll be logged out immediately</h5>
+    </div>
     <div class="container">
         <nav id="header">
             <ul>
                 <li onclick="showInstructions()">Instructions</li>
-                <a href="/login"><li>Login</li></a>
+                <a href="/login">
+                    <li>Login</li>
+                </a>
             </ul>
         </nav>
         <div id="content">
             <div class="row">
                 <div id="details">
-                        <p class="title">Blind Coding</p>
-                        <p class="descrip">Ever thought of writing the code without
-being able to see the code on screen?<br>
-Then what are you waiting for?<br><br>
-Login and code without being able to see what you are
-typing for the given problem statement in the given timeframe.<br><br> <b>Now that's
-coding with a vision, the vision of bat as they say.</b></p>
-                    </div>
+                    <p class="title">Blind Coding</p>
+                    <p class="descrip">Ever thought of writing the code without
+                        being able to see the code on screen?<br>
+                        Then what are you waiting for?<br><br>
+                        Login and code without being able to see what you are
+                        typing for the given problem statement in the given timeframe.<br><br> <b>Now that's
+                            coding with a vision, the vision of bat as they say.</b></p>
+                </div>
                 <img src="../../static/assets/ninja-coder.png" id="event-logo">
             </div>
             <a href="/login"><button>Login/Signup</button></a>
@@ -59,7 +68,28 @@ coding with a vision, the vision of bat as they say.</b></p>
             <img src="../../static/assets/club-logo.svg" class="club-logo">
         </div>
     </div>
+    <div id="footer">
+        <div id="sponsors-container">
+            <div id="logo-img">
+                <div class="logo-container">
+                    <a href="https://github.com/"><img width="200px" src="../../static/assets/git.png"></a>
+                </div>
+                <div class="logo-container">
+                    <a href="https://www.walmart.com/"><img width="250px" src="../../static/assets/wal.png"></a>
+                </div>
+                <div class="logo-container">
+                    <a href="https://www.infogain.com/"><img width="200px" src="../../static/assets/info.png"></a>
+                </div>
+            </div>
+            <div id="spon-title">
+                <h3>Title Sponsor</h4>
+                    <h3>Associate Title Sponsor</h4>
+                        <h3>Gold Sponsor</h4>
+            </div>
+        </div>
+    </div>
     <script src="/static/js/app.js"></script>
-	<script src="/static/js/script.js" type="text/javascript"></script>
+    <script src="/static/js/script.js" type="text/javascript"></script>
 </body>
+
 </html>
