@@ -10,11 +10,14 @@ body {
 #main {
   display: flex;
   flex: 1;
+  
 }
 #main > .left {
   flex: 1;
   order: 1;
   sizing: expand;
+  height: 60vh;
+  overflow-y: scroll;
 }
 /* #main > nav, */
 #main > .right {

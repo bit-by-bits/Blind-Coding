@@ -152,6 +152,8 @@ nav#header ul a {
   font-size: 16px;
   padding: 25px 15px;
   sizing: expand;
+  height: 60vh;
+  overflow-y: scroll;
 }
 
 #main > .qno {
@@ -170,8 +172,10 @@ nav#header ul a {
   position: relative;
   top: 10px;
   right: 10px;
-  min-height: 83vh;
+  height: 72vh;
+  overflow-y: scroll;
   border-radius: 20px;
+  
 }
 /* #main > nav {
   background: #D7E8D4;
@@ -349,6 +353,7 @@ textarea:focus {
 
 .leaderboard {
   height: 75vh;
+  z-index: 1;
   width: 90vh;
   background: black;
   border: 0.5px solid whitesmoke;
@@ -391,6 +396,8 @@ textarea:focus {
 
 #score, #timer {
   color: #bbb;
+  display: inline-block;
+  width: 40px;
 }
 
 table {
