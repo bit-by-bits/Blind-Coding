@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.shortcuts import render
 from django.http import JsonResponse,HttpResponseRedirect,HttpResponse
-from .models import Userdata,Question,Time_Penalty
+from main_app.models import Userdata, Question, Time_Penalty
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
@@ -11,9 +11,18 @@ import base64
 import time
 import blind_coding.settings as settings
 
+MAX_ATTEMPTS = 250
 
+@login_required
 def default(request):
-	return render(request,'loggedIn.html')
+	user_data = Userdata.objects.filter(user_id = request.user)[0]
+	print(user_data)
+	print("Hello")
+	context = {
+		'userdata': user_data, 
+		'maxAttempts': MAX_ATTEMPTS
+	}
+	return render(request,'loggedIn.html', context = context)
 
 def index(request):
 	return render(request,'index.html')
@@ -25,12 +34,12 @@ def login(request):
 
 @login_required(login_url='/')
 def main(request):
-   return render(request, 'loggedIn.html',)
+	return render(request, 'loggedIn.html')
 
 def question(request):
 	data = json.loads( request.body.decode('utf-8') )
 	num = data['queNum']
-	print(num)
+	#print(num)
 	ques = Question.objects.get(qno=num)
 	question = ques.text
 	sampleTestCaseNum = ques.testcaseno
@@ -43,8 +52,8 @@ def question(request):
 	res['sampIn'] = sampleIn
 	res['sampleOut'] = sampleOut
 	res['userScore'] = Userdata.objects.get(user_id = request.user).score
-	print('hi')
-	print(res['userScore'])
+	#print('hi')
+	#print(res['userScore'])
 	return HttpResponse(json.dumps(res))
 
 def runCode(request):
@@ -55,10 +64,10 @@ def runCode(request):
 	# postData['stdin'] = str(base64.b64encode(stdin.encode("utf-8")))
 	postData['stdin'] = stdin
 	# postData['source_code'] = str(base64.b64encode(postData['source_code'].encode('utf-8')))
-	print(postData)
+	# print(postData)
 	response = requests.post(url , json=postData)	
 	resp = response.json()
-	print(resp)
+	# print(resp)
 	# resp = json.loads(resp)
 	print('qNo',postData['qNo'])
 	print('response token: ',resp['token'])
@@ -121,7 +130,7 @@ def runCode(request):
 	
 	currUser.save()
 	res['score'] = currUser.score
-	print(res['score'])
+	# print(res['score'])
 	if currUser.answerGiven == "11111":
 		res['completedGame'] = 'true'
 	else:

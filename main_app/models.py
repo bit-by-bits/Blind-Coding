@@ -1,6 +1,9 @@
+from tkinter.tix import MAX
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+
+MAX_ATTEMPTS = 250
 
 class Userdata(models.Model):
     user_id=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -10,6 +13,12 @@ class Userdata(models.Model):
     answerGiven = models.CharField(max_length = 10, default="00000")
     timeElapsed = models.IntegerField(default = 0)
     total_penalty=models.IntegerField(default = 0)
+
+    attempts = models.IntegerField(default = MAX_ATTEMPTS)
+    # q2_attempts = models.IntegerField(default = 0)
+    # q3_attempts = models.IntegerField(default = 0)
+    # q4_attempts = models.IntegerField(default = 0)
+    # q5_attempts = models.IntegerField(default = 0)
 
     def __str__(self):
             return str(self.user_id.username)
@@ -35,6 +44,8 @@ class Question(models.Model):
     test_case4_sol=models.CharField(max_length=1000,default='')
     test_case5_sol=models.CharField(max_length=1000,default='')
     test_case6_sol=models.CharField(max_length=1000,default='')
+    
+    # max_attempts = models.IntegerField(default = 0)
     
     def __str__(self):
         return str(self.weight)

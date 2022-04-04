@@ -112,7 +112,7 @@ function logout(reason){
       'error'
     );
   }
-  window.location.href = "/logout";
+  window.location.href = "/main";
 }
 
 function resetTime(){

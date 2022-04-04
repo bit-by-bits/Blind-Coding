@@ -60,25 +60,28 @@
 			</ul>
 		</div>
 		<div class="backdrop">
+		</div>
+		
+		<div class="instructions">
+			<div id="close" onclick="closeInstructions()">
+				<span class="horiz"></span>
+				<span class="verti"></span>
 			</div>
-			<div class="instructions">
-				<div id="close" onclick="closeInstructions()">
-					<span class="horiz"></span>
-					<span class="verti"></span>
-				</div>
-				<h3>Instructions</h3>
-				<h5>- There are five questions of varying difficulties and points associated with them. <br> Score associated are 20, 40, 60, 80, 100 points respectively.</h5>
-				<h5>- For every question, the first time you submit the correct answer, you are awarded points corresponding to that question and the time penalty is 
-					also calculated which takes into consideration the time taken until last successful solve together with the number of wrong attempts</h5>
-				<h5>- Standings will be based on the points scored and in cases of clashes, time penalties are compared and one with lesser time penalty is better ranker</h5>
-				<h5>- Every time you give a correct answer, the question is automatically changed and code editor is reset.</h5>
-				<h5>- You have only two attempts throughout the event to see the code you have written. To see the code, press Show Code button near Run button.</h5>
-				<h5>- Don't try to open up the console or changing the window/tab. You'll be logged out immediately</h5>
-			</div>
+			<h3>Instructions</h3>
+			<h5>- There are five questions of varying difficulties and points associated with them. <br> Score associated are 20, 40, 60, 80, 100 points respectively.</h5>
+			<h5>- For every question, the first time you submit the correct answer, you are awarded points corresponding to that question and the time penalty is 
+				also calculated which takes into consideration the time taken until last successful solve together with the number of wrong attempts</h5>
+			<h5>- Standings will be based on the points scored and in cases of clashes, time penalties are compared and one with lesser time penalty is better ranker</h5>
+			<h5>- Every time you give a correct answer, the question is automatically changed and code editor is reset.</h5>
+			<h5>- You have only two attempts throughout the event to see the code you have written. To see the code, press Show Code button near Run button.</h5>
+			<h5>- Don't try to open up the console or changing the window/tab. You'll be logged out immediately</h5>
+		</div>
+
+		
 	  <nav id="header">
 		<ul>
 			<li onclick="showInstructions()">Instructions</li>
-			<li>Contact</li>
+			<!-- <li>Contact</li> -->
 			<a href="/logout"><li>Logout</li></a>
 		</ul>
 	  </nav> 
@@ -113,8 +116,16 @@
 					<textarea id="compilerOutput" class="no-copy-paste noselect" autocorrect="off" autocapitalize="off" spellcheck="false" disabled placeholder="// Output will be shown here when you click 'Run'!"></textarea>
 				</div>
 
+				<div>
+					<p style="color: white">Run Attempts Left: {{ userdata.attempts }}    See Code Chances Left: {{ userdata.attempts }}</p>
+						<p style="color: white"></p>
+					</li>
+				</div>
+
 				<div class="options">
-					<button class="bttn" id="runBtn" onclick="runCode()">Run</button>
+					{% if userdata.attempts <= maxAttempts %}
+						<button class="bttn" id="runBtn" onclick="runCode()">Run</button>
+					{% endif %}
 					<button class="bttn" id="showCode">Show Code</button>
 					<!-- <div class="time-left">10</div> -->
 				</div>
@@ -147,7 +158,7 @@
 				<tfoot>
 					<tr>
 					  <th></th>
-					  <th id="userRank">1</th>
+					  <th id="userRank"></th>
 					</tr>
 				</tfoot>
 		  </table>
@@ -177,22 +188,26 @@
 				if (isNaN(start) || isNaN(end) || end - start > allow) {
 				}
 			}
+
 			if (window.attachEvent) {
 				if (document.readyState === "complete" || document.readyState === "interactive") {
-					detectDevTool();
-					window.attachEvent('onresize', detectDevTool);
-					window.attachEvent('onmousemove', detectDevTool);
-					window.attachEvent('onfocus', detectDevTool);
-					window.attachEvent('onblur', detectDevTool);
+					//detectDevTool();
+					// getLeaderboard();
+					// window.attachEvent('onresize', detectDevTool);
+					// window.attachEvent('onmousemove', detectDevTool);
+					// window.attachEvent('onfocus', detectDevTool);
+					// window.attachEvent('onblur', detectDevTool);
+					;
 				} else {
 					setTimeout(argument.callee, 0);
 				}
 			} else {
-				window.addEventListener('load', detectDevTool);
-				window.addEventListener('resize', detectDevTool);
-				window.addEventListener('mousemove', detectDevTool);
-				window.addEventListener('focus', detectDevTool);
-				window.addEventListener('blur', detectDevTool);
+				// window.addEventListener('load', detectDevTool);
+				// window.addEventListener('resize', detectDevTool);
+				// window.addEventListener('mousemove', detectDevTool);
+				// window.addEventListener('focus', detectDevTool);
+				// window.addEventListener('blur', detectDevTool);
+				;
 			}
 		}();
 	</script>

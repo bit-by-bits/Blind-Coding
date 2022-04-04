@@ -278,7 +278,7 @@ textarea:focus {
 }
 
 .outputArea {
-  height: 25vh;
+  height: 20vh !important;
   margin: 10px 0 0 0;
 }
 

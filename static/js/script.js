@@ -1,11 +1,12 @@
 function getLeaderboard() {
     $.ajax({
-        url : "http://blindcoding.tech/leaderboard/",
+        url : "http://127.0.0.1:8000/leaderboard/",
         type : "GET",
         beforeSend : function() {
             document.getElementById('leaderboard-loader').style.display = 'block';
         },
         success : function(jsondata) {
+            console.log("got leaderboard")
             var objRecieved = jQuery.parseJSON(JSON.stringify(jsondata));
             let template = document.getElementById("leaderboard-row");
             document.getElementById('leaderboard-loader').style.display = 'none';
