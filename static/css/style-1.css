@@ -152,6 +152,7 @@ nav#header ul a {
   font-size: 16px;
   padding: 25px 15px;
   sizing: expand;
+  width: 40vw;
   height: 60vh;
   overflow-y: scroll;
 }
@@ -172,8 +173,9 @@ nav#header ul a {
   position: relative;
   top: 10px;
   right: 10px;
-  height: 72vh;
-  overflow-y: scroll;
+  height: 90vh;
+  width: 30vw !important;
+  /* overflow-y: scroll; */
   border-radius: 20px;
   
 }

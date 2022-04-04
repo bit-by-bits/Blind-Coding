@@ -76,21 +76,21 @@ def runCode(request):
 
 	status = resp["statusCode"]
 	output = resp["output"]
-	time = resp["cpuTime"]
 
 	print(resp)
 
 	res = {}
-	
 	if status != 200:
 		print("Server side or JDoodle error!!!")
 		res["stdout"] = "A server-side error occured, please try again after some time...\n"
 		return HttpResponse(json.dumps(res))
 
 	currUser = Userdata.objects.get(user_id = request.user)
+	currUser.attempts -= 1
 	if 'Timeout' in output:
 		print("TLE")
 		res["stdout"] = "Time Limit Exceeded"
+		res['runAttempts'] = currUser.attempts
 		res['score'] = currUser.score
 
 		timepenalty , status = Time_Penalty.objects.get_or_create(player=currUser,question=que)
@@ -101,6 +101,7 @@ def runCode(request):
 
 	if ('error' in output) or ('Error' in output):
 		res['stdout'] = 'Error: \n' + output.replace("jdoodle", "main")
+		res['runAttempts'] = currUser.attempts
 		res['score'] = currUser.score
 	else:
 		quesNo = postData['qNo']
@@ -110,6 +111,7 @@ def runCode(request):
 		currUser.timeElapsed += int(postData['timeElapsed'])
 		if answer == output:
 			res['stdout'] = 'Accepted!'
+			res['runAttempts'] = currUser.attempts
 			lst = list(currUser.answerGiven)
 			
 			if(lst[quesNo] == '0'):	# if the question is being answered first time
@@ -128,6 +130,7 @@ def runCode(request):
 			timepenalty.save()
 
 			res['stdout'] = 'Wrong Answer'
+			res['runAttempts'] = currUser.attempts
 	
 	currUser.save()
 	res['score'] = currUser.score

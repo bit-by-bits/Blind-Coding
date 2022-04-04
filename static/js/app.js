@@ -27,7 +27,7 @@ $(document).ready(function() {
 
   populateLangs();
   getQuestion(0);
-  //disableCopyPaste();
+  disableCopyPaste();
   leaderbInit();
   increaseTime();
   hideCode();
@@ -141,6 +141,10 @@ function setScore(score){
   document.getElementById('score').innerHTML = score;
 }
 
+function setRunAttempts(attempts){
+  document.getElementById('run-attempts').innerHTML = attempts;
+}
+
 function getOutput(){
   return document.getElementById("compilerOutput").value;
 }
@@ -200,6 +204,7 @@ function runCode(){
     version: langVersion
   };
   console.log(prog)
+  document.getElementById("compilerOutput").innerText = "Running..."
 
   sendRequest('POST', '/runCode/', program).then(
     function(response){
@@ -209,9 +214,14 @@ function runCode(){
       console.log('Compiler Call Response: ', response);
       setOutput(response['stdout']);
       setScore(response['score']);
-      if(getOutput() == 'Correct Answer')
-      {
+      setRunAttempts(response['runAttempts'])
+      if(getOutput() == 'Correct Answer'){
         if(response['completedGame'] == 'true'){
+          Swal.fire(
+            'Congrats!',
+            'You have correctly answered all questions!',
+            'success'
+          );
           logout('Finished');
         }
         resetTime();
@@ -361,35 +371,53 @@ function sideNavInit(){
 
 function increaseTime() {
     timerId = setInterval(function() {
-    if (s > 59){
-      s -= 60;
-      m += 1;
-    } 
+    // if (s > 59){
+    //   s -= 60;
+    //   m += 1;
+    // } 
 
-    if (m < 10) {
-      if (s < 10) {
-        timerCont.innerHTML = '0' + m + ':0' + s;
-      }
-      else {
-        timerCont.innerHTML = '0' + m + ':' + s;
-      }
-    }
-    else {
-      if (s < 10) {
-        timerCont.innerHTML = m + ':0' + s;
-      }
-      else {
-        timerCont.innerHTML = + m + ':' + s;
-      }
+    // if (m < 10) {
+    //   if (s < 10) {
+    //     timerCont.innerHTML = '0' + m + ':0' + s;
+    //   }
+    //   else {
+    //     timerCont.innerHTML = '0' + m + ':' + s;
+    //   }
+    // }
+    // else {
+    //   if (s < 10) {
+    //     timerCont.innerHTML = m + ':0' + s;
+    //   }
+    //   else {
+    //     timerCont.innerHTML = + m + ':' + s;
+    //   }
+    // }
+
+    // s++;
+    
+    var countDownDate = new Date("Apr 04, 2022 20:30:00").getTime();
+    var now = new Date().getTime();
+    var timeleft = countDownDate - now;
+
+    var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);  
+
+    if (minutes < 10){
+      minutes = "0" + minutes;
     }
 
-    s++;
+    if (seconds < 10){
+      seconds = "0" + seconds;
+    }
+
+    timerCont.innerHTML = minutes + ':' + seconds;
+
   }, 1000)
 }
 
 // Pause time function
 function pauseTime() {
-  clearInterval(timerId);
+  // clearInterval(timerId);
 }
 
 // Won't allow user to cheat by changing text-color
@@ -439,7 +467,7 @@ const showCode = () => {
           // Disable button and show code for 5 seconds
           document.getElementById("showCode").disabled = true;
           box.disabled = true;
-          clearInterval(codeIntervalId);
+          // clearInterval(codeIntervalId);
           box.style.color = 'white';
           setTimeout(() => {
             hideCode()
@@ -449,13 +477,6 @@ const showCode = () => {
         }
         increaseClicks(clicks);
       }
-      // else{
-      //   Swal.fire(
-      //     'Sorry..',
-      //     'You have used up all your view code chances!',
-      //     'error'
-      //   );
-      // }
     }
   ).catch(
     function(error){
