@@ -1,0 +1,96 @@
+{
+    "langs": [
+        {
+            "id": "java",
+            "name": "Java JDK 17.0.1",
+            "version": 4
+        },
+        {
+            "id": "c",
+            "name": "C GCC 9.1.0",
+            "version": 4
+        },
+        {
+            "id": "cpp",
+            "name": "C++ GCC 9.1.0",
+            "version": 4
+        },
+        {
+            "id": "cpp14",
+            "name": "C++ 14 GCC 9.1.0",
+            "version": 3
+        },
+        {
+            "id": "cpp17",
+            "name": "C++ 17 GCC 9.1.0",
+            "version": 0
+        },
+        {
+            "id": "cpp",
+            "name": "C++ GCC 9.1.0",
+            "version": 4
+        },
+        {
+            "id": "python3",
+            "name": "Python 3.6.5",
+            "version": 2
+        },
+        {
+            "id": "ruby",
+            "name": "Ruby 3.0.2",
+            "version": 4
+        },
+        {
+            "id": "go",
+            "name": "GoLang 1.17.3",
+            "version": 4
+        },
+        {
+            "id": "scala",
+            "name": "Scala 2.13.6",
+            "version": 4
+        },
+        {
+            "id": "bash",
+            "name": "Bash Shell 5.1.12",
+            "version": 4
+        },
+        {
+            "id": "csharp",
+            "name": "C# mono-6.12.0",
+            "version": 4
+        },
+        {
+            "id": "rust",
+            "name": "Rust 1.56.1",
+            "version": 4
+        },
+        {
+            "id": "dart",
+            "name": "Dart 2.14.4",
+            "version": 4
+        },
+        {
+            "id": "nasm",
+            "name": "NASM 2.15.05",
+            "version": 4
+        },
+        {
+            "id": "kotlin",
+            "name": "Kotlin 1.6.0 (JRE 17.0.1+12)",
+            "version": 3
+        }
+    ]
+}
+
+print(-1)
+print(121506)
+print(845478)
+print(161403)
+print(86211703851)
+print(63)
+
+import time
+
+time.sleep(3)
+print(-1)

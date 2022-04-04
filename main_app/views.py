@@ -16,8 +16,6 @@ MAX_ATTEMPTS = 250
 @login_required
 def default(request):
 	user_data = Userdata.objects.filter(user_id = request.user)[0]
-	print(user_data)
-	print("Hello")
 	context = {
 		'userdata': user_data, 
 		'maxAttempts': MAX_ATTEMPTS
@@ -28,9 +26,7 @@ def index(request):
 	return render(request,'index.html')
 
 def login(request):
-#	if request.POST:
 	return redirect('/accounts/google/login')
-#	return render(request,'index.html')
 
 @login_required(login_url='/')
 def main(request):
@@ -39,12 +35,12 @@ def main(request):
 def question(request):
 	data = json.loads( request.body.decode('utf-8') )
 	num = data['queNum']
-	#print(num)
 	ques = Question.objects.get(qno=num)
 	question = ques.text
 	sampleTestCaseNum = ques.testcaseno
 	sampleIn = ques.samplein
 	sampleOut = ques.sampleout
+	
 	res={}
 	res['question'] = question
 	res['qNo'] = num
@@ -52,63 +48,70 @@ def question(request):
 	res['sampIn'] = sampleIn
 	res['sampleOut'] = sampleOut
 	res['userScore'] = Userdata.objects.get(user_id = request.user).score
-	#print('hi')
-	#print(res['userScore'])
+
 	return HttpResponse(json.dumps(res))
 
 def runCode(request):
-	postData = json.loads( request.body.decode('utf-8') )
-	url = 'http://165.232.133.80:2358/submissions?base64_encoded=false&wait=false'
+	postData = json.loads(request.body.decode('utf-8'))
+	print(postData)
+	url = 'https://api.jdoodle.com/execute'
+	
 	que = Question.objects.get(qno=postData['qNo'])
+	
 	stdin = '6'+'\n'+que.test_case1+'\n'+que.test_case2+'\n'+que.test_case3+'\n'+que.test_case4+'\n'+que.test_case5+'\n'+que.test_case6
-	# postData['stdin'] = str(base64.b64encode(stdin.encode("utf-8")))
+	
+	req = {
+		'clientId': '5830c3f45d22976c891ea609178123f3',
+		'clientSecret': '576546edb3d80d4ae3e20557266b1a95af686462eb1d1a83131872e69755d285',
+		'script': postData["source_code"],
+		'stdin': stdin,
+		'language': postData["language_id"],
+		'versionIndex': postData["version"]
+	}
+	
 	postData['stdin'] = stdin
-	# postData['source_code'] = str(base64.b64encode(postData['source_code'].encode('utf-8')))
-	# print(postData)
-	response = requests.post(url , json=postData)	
+	
+	response = requests.post(url , json=req)	
 	resp = response.json()
-	# print(resp)
-	# resp = json.loads(resp)
-	print('qNo',postData['qNo'])
-	print('response token: ',resp['token'])
 
-	url2 = 'http://165.232.133.80:2358/submissions/'+resp['token']+'?base64_encoded=false'
-	time.sleep(1)
-	resp = requests.get(url2).json()
-	if 'status' in resp:
-		if resp['status']['description'] == "Processing":
-			while resp['status']['description'] == "Processing":
-				resp = requests.get(url2).json()
+	status = resp["statusCode"]
+	output = resp["output"]
+	time = resp["cpuTime"]
+
 	print(resp)
-	# print('exit_code ',resp['exit_code'])
-	# print('exit_signal ',resp['exit_signal'])
-	# print( str(base64.b64decode(resp['stderr'].encode('utf-8').strip()), "utf-8") )
-	# print('output response: ',resp['stdout'])
+
 	res = {}
-	#Get current user
+	
+	if status != 200:
+		print("Server side or JDoodle error!!!")
+		res["stdout"] = "A server-side error occured, please try again after some time...\n"
+		return HttpResponse(json.dumps(res))
+
 	currUser = Userdata.objects.get(user_id = request.user)
-	if 'error' in resp:
-		res['stdout'] = 'error'
-	elif resp['status']['description'] != "Accepted":
-		if resp['stderr'] is not None:
-			res['stdout'] = resp['stderr']
-		elif resp['compile_output'] is not None:
-			res['stdout'] = resp['compile_output']
-		else:
-			res['stdout'] = 'error'
+	if 'Timeout' in output:
+		print("TLE")
+		res["stdout"] = "Time Limit Exceeded"
+		res['score'] = currUser.score
+
+		timepenalty , status = Time_Penalty.objects.get_or_create(player=currUser,question=que)
+		timepenalty.no_wa+=1
+		timepenalty.save()
+
+		return HttpResponse(json.dumps(res))
+
+	if ('error' in output) or ('Error' in output):
+		res['stdout'] = 'Error: \n' + output.replace("jdoodle", "main")
+		res['score'] = currUser.score
 	else:
-		# no errors till now, check answer
 		quesNo = postData['qNo']
 		quesData = Question.objects.get(qno= quesNo)
 		answer = quesData.test_case1_sol+'\n'+quesData.test_case2_sol+'\n'+quesData.test_case3_sol+'\n'+quesData.test_case4_sol+'\n'+quesData.test_case5_sol+'\n'+quesData.test_case6_sol+'\n'
-		print(answer)
+		
 		currUser.timeElapsed += int(postData['timeElapsed'])
-		if answer == resp['stdout']:
-			print('hurray')
-			res['stdout'] = 'Correct Answer'
-			print(currUser.answerGiven)
+		if answer == output:
+			res['stdout'] = 'Accepted!'
 			lst = list(currUser.answerGiven)
-			print(lst)
+			
 			if(lst[quesNo] == '0'):	# if the question is being answered first time
 				print('Updating score for question no', )
 				lst[quesNo] = '1'
@@ -121,20 +124,19 @@ def runCode(request):
 				currUser.save()
 		else:
 			timepenalty , status = Time_Penalty.objects.get_or_create(player=currUser,question=que)
-			print('hiii')
-			print('hola: ',timepenalty)
-			print('timepenalty_player',timepenalty.player)
 			timepenalty.no_wa+=1
-			res['stdout'] = 'Wrong answer..'
 			timepenalty.save()
+
+			res['stdout'] = 'Wrong Answer'
 	
 	currUser.save()
 	res['score'] = currUser.score
-	# print(res['score'])
+
 	if currUser.answerGiven == "11111":
 		res['completedGame'] = 'true'
 	else:
 		res['completedGame'] = 'false'
+
 	return HttpResponse(json.dumps(res))
 
 def l_out(request):

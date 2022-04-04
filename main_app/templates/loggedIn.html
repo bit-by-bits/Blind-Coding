@@ -98,12 +98,6 @@
 					<div class="input-field col s12">
 						<select id="langSelect">
 							<option value="" disabled selected class="blue-text text-darken-2">Choose your language</option>
-							<!-- <option value="c">C</option>
-							<option value="java">Java</option>
-							<option value='cpp'>C++</option>
-							<option value='cpp14'>C++14</option>
-							<option value='python2'>Python2</option>
-							<option value='python3'>Python3</option> -->
 						</select>
 					</div>
 				</div>
@@ -116,18 +110,17 @@
 					<textarea id="compilerOutput" class="no-copy-paste noselect" autocorrect="off" autocapitalize="off" spellcheck="false" disabled placeholder="// Output will be shown here when you click 'Run'!"></textarea>
 				</div>
 
-				<div>
-					<p style="color: white">Run Attempts Left: {{ userdata.attempts }}    See Code Chances Left: {{ userdata.attempts }}</p>
-						<p style="color: white"></p>
-					</li>
+				<div style="color: white; width: 100%; display: flex;">
+					<p style="margin-left: 20%">Run Attempts Left: {{ userdata.attempts }} <p style="margin-left: 5%">View Code Chances Left: <p id="view-chances"></p></p>
 				</div>
 
 				<div class="options">
 					{% if userdata.attempts <= maxAttempts %}
 						<button class="bttn" id="runBtn" onclick="runCode()">Run</button>
 					{% endif %}
-					<button class="bttn" id="showCode">Show Code</button>
-					<!-- <div class="time-left">10</div> -->
+					{% if userdata.chancesUsed <= 5 %}
+						<button class="bttn" id="showCode" onclick="showCode()">Show Code</button>
+					{% endif %}
 				</div>
 
 			</div>

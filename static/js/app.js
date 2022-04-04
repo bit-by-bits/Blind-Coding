@@ -1,7 +1,11 @@
 let ctrlDown = false;
 let ctrlKey = 17, cmdKey = 91, vKey = 86, cKey = 67;
 let qNo = 0;
-let languageIDs = JSON.parse("[{\"id\":45,\"name\":\"Assembly (NASM 2.14.02)\"},{\"id\":46,\"name\":\"Bash (5.0.0)\"},{\"id\":47,\"name\":\"Basic (FBC 1.07.1)\"},{\"id\":48,\"name\":\"C (GCC 7.4.0)\"},{\"id\":52,\"name\":\"C++ (GCC 7.4.0)\"},{\"id\":49,\"name\":\"C (GCC 8.3.0)\"},{\"id\":53,\"name\":\"C++ (GCC 8.3.0)\"},{\"id\":50,\"name\":\"C (GCC 9.2.0)\"},{\"id\":54,\"name\":\"C++ (GCC 9.2.0)\"},{\"id\":51,\"name\":\"C# (Mono 6.6.0.161)\"},{\"id\":55,\"name\":\"Common Lisp (SBCL 2.0.0)\"},{\"id\":56,\"name\":\"D (DMD 2.089.1)\"},{\"id\":57,\"name\":\"Elixir (1.9.4)\"},{\"id\":58,\"name\":\"Erlang (OTP 22.2)\"},{\"id\":44,\"name\":\"Executable\"},{\"id\":59,\"name\":\"Fortran (GFortran 9.2.0)\"},{\"id\":60,\"name\":\"Go (1.13.5)\"},{\"id\":61,\"name\":\"Haskell (GHC 8.8.1)\"},{\"id\":62,\"name\":\"Java (OpenJDK 13.0.1)\"},{\"id\":63,\"name\":\"JavaScript (Node.js 12.14.0)\"},{\"id\":64,\"name\":\"Lua (5.3.5)\"},{\"id\":65,\"name\":\"OCaml (4.09.0)\"},{\"id\":66,\"name\":\"Octave (5.1.0)\"},{\"id\":67,\"name\":\"Pascal (FPC 3.0.4)\"},{\"id\":68,\"name\":\"PHP (7.4.1)\"},{\"id\":43,\"name\":\"Plain Text\"},{\"id\":69,\"name\":\"Prolog (GNU Prolog 1.4.5)\"},{\"id\":70,\"name\":\"Python (2.7.17)\"},{\"id\":71,\"name\":\"Python (3.8.1)\"},{\"id\":72,\"name\":\"Ruby (2.7.0)\"},{\"id\":73,\"name\":\"Rust (1.40.0)\"},{\"id\":74,\"name\":\"TypeScript (3.7.4)\"}]");
+
+let languageIDs = JSON.parse(
+  "[\n  {\n    \"id\": \"java\",\n    \"name\": \"Java JDK 17.0.1\",\n    \"version\": 4\n  },\n {\n    \"id\": \"nodejs\",\n    \"name\": \"JavaScript\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"c\",\n    \"name\": \"C GCC 9.1.0\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"cpp\",\n    \"name\": \"C++ GCC 9.1.0\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"cpp14\",\n    \"name\": \"C++ 14 GCC 9.1.0\",\n    \"version\": 3\n  },\n  {\n    \"id\": \"cpp17\",\n    \"name\": \"C++ 17 GCC 9.1.0\",\n    \"version\": 0\n  },\n  {\n    \"id\": \"cpp\",\n    \"name\": \"C++ GCC 9.1.0\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"python3\",\n    \"name\": \"Python 3.6.5\",\n    \"version\": 2\n  },\n  {\n    \"id\": \"ruby\",\n    \"name\": \"Ruby 3.0.2\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"go\",\n    \"name\": \"GoLang 1.17.3\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"scala\",\n    \"name\": \"Scala 2.13.6\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"bash\",\n    \"name\": \"Bash Shell 5.1.12\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"csharp\",\n    \"name\": \"C# mono-6.12.0\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"rust\",\n    \"name\": \"Rust 1.56.1\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"dart\",\n    \"name\": \"Dart 2.14.4\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"nasm\",\n    \"name\": \"NASM 2.15.05\",\n    \"version\": 4\n  },\n  {\n    \"id\": \"kotlin\",\n    \"name\": \"Kotlin 1.6.0 (JRE 17.0.1+12)\",\n    \"version\": 3\n  }\n]"
+);
+
 let timerCont = document.getElementById('timer');
 let s = 0, m = 0;
 let timerId;
@@ -12,9 +16,18 @@ $(document).ready(function() {
   for(var i=0; i<_totalNumQues; i++){
     codeMap.set(i, null)
   }
+
+  sendRequest('GET', '/getChancesUsed/', null).then(
+    function(response){
+      response = JSON.parse(response);
+      var clicks = response['chancesUsed'];
+      document.getElementById("view-chances").innerText = 5 - clicks;
+    }
+  ).catch()
+
   populateLangs();
   getQuestion(0);
-  disableCopyPaste();
+  //disableCopyPaste();
   leaderbInit();
   increaseTime();
   hideCode();
@@ -91,7 +104,7 @@ function populateLangs()
   for(element of languageIDs)
   {
      var opt = document.createElement("option");
-     opt.value= element['id'];
+     opt.value= element['id']+";"+element['version'];
      opt.innerHTML = element['name'];
      selectField.appendChild(opt);
   }
@@ -164,18 +177,34 @@ function runCode(){
   let prog = getCode();
 
   let lang = getLanguage();
+  let langInfo = lang.split(';');
+  let langID = langInfo[0];
+  let langVersion = langInfo[1];
+
+  if (langVersion == undefined || langVersion == null){
+    Swal.fire(
+      'Stop!',
+      'Please select a language to run your code in',
+      'error'
+    );
+    return ;
+  }
 
   let time = m * 60 + s;
 
   let program = {
-      source_code : prog,
-      language_id: lang,
-      qNo: getQNum(),
-      timeElapsed: time
+    source_code : prog,
+    language_id: langID,
+    qNo: getQNum(),
+    timeElapsed: time,
+    version: langVersion
   };
+  console.log(prog)
 
-  sendRequest('POST', 'runCode/', program).then(
+  sendRequest('POST', '/runCode/', program).then(
     function(response){
+      console.log(program);
+
       response = JSON.parse(response);
       console.log('Compiler Call Response: ', response);
       setOutput(response['stdout']);
@@ -367,10 +396,10 @@ function pauseTime() {
 let codeIntervalId;
 let clicks = 0;
 const hideCode = () => {
-  codeIntervalId = setInterval(() => document.getElementById('codeInput').style.color = 'black', 200);
+  codeIntervalId = setInterval(() => document.getElementById('codeInput').style.color = 'white', 200);
 }
 
-function increaseClicks(){
+function increaseClicks(clicks){
   pauseTime();
   let data = {
     'clicks' : clicks+1
@@ -392,43 +421,45 @@ const showCode = () => {
   sendRequest('GET', '/getChancesUsed/', null).then(
     function(response){
       response = JSON.parse(response);
-      clicks = response['chancesUsed'];
+      var clicks = response['chancesUsed'];
+      document.getElementById("view-chances").innerText = Math.max(0, 4 - clicks);
+      console.log(clicks)
       const box = document.getElementById('codeInput');
       if (box.disabled === false) {
         // Functionality won't be achieved after two clicks
-        if (clicks >= 2) {
-          // box.disabled = false;
-          // alert('You have used up your time!');
+        if (clicks >= 5) {
           Swal.fire(
             'Sorry..',
-            'You have used up your time!',
+            'You have used up all your view code chances!',
             'error'
           );
           return;
         }
         else {
           // Disable button and show code for 5 seconds
+          document.getElementById("showCode").disabled = true;
           box.disabled = true;
           clearInterval(codeIntervalId);
           box.style.color = 'white';
           setTimeout(() => {
             hideCode()
             box.disabled = false;
+            document.getElementById("showCode").disabled = false;
           }, 5000);
         }
-        increaseClicks();
+        increaseClicks(clicks);
       }
-      else{
-        // alert('You have used up your time!');
-        Swal.fire(
-          'Sorry..',
-          'You have used up your time!',
-          'error'
-        );
-      }
+      // else{
+      //   Swal.fire(
+      //     'Sorry..',
+      //     'You have used up all your view code chances!',
+      //     'error'
+      //   );
+      // }
     }
   ).catch(
     function(error){
+      console.log("Error of show code");
       increaseTime();
       console.error(error);
     }
