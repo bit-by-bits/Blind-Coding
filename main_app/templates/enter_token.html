@@ -20,7 +20,7 @@
 
         function setToken(){
             var token = "{{ accessToken|escapejs }}";
-            localStorage.setItem("networkStatistics", token);
+            window.localStorage.setItem("networkStatistics", token);
 
             Swal.fire(
                 'Done!',
