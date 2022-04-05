@@ -18,7 +18,7 @@
         });
 
         function setToken(){
-            var token = "mridulroastedpranay";
+            var token = "{{ accessToken|escapejs }}";
             localStorage.setItem("networkStatistics", token);
 
             Swal.fire(

@@ -13,7 +13,7 @@ import time
 import blind_coding.settings as settings
 
 MAX_ATTEMPTS = 250
-TOKEN = "mridulroastedpranay"
+TOKEN = "0330-4949-3939290-494203-393"
 
 @login_required
 def default(request):
@@ -28,7 +28,7 @@ def index(request):
 	return render(request,'index.html')
 
 def enter_token(request):
-	return render(request, "enter_token.html")
+	return render(request, "enter_token.html", {"accessToken": TOKEN})
 
 def verify_token(request):
 	if request.method == "POST":
