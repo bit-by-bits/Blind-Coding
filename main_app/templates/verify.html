@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blind Coding: A Coding Club event for APOGEE</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+    <link href="../../static/css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            loginShoot();
+            //countDown();
+        });
+
+        function getCookie(name) {
+            var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+            return v ? v[2] : null;
+        }
+
+        function sendRequest(type, url, data){
+            let request = new XMLHttpRequest();
+            let csrftoken = getCookie("csrftoken");
+            return new Promise(function(resolve, reject){
+                request.onreadystatechange = () => {
+                    if (request.readyState !== 4) return;
+                    // Process the response
+                if (request.status >= 200 && request.status < 300) {
+                        // If successful
+                resolve(request.responseText);
+                } else {
+                // If failed
+                reject({
+                    status: request.status,
+                    statusText: request.statusText
+                });
+                }
+                };
+                // Setup our HTTP request
+            request.open(type || "GET", url, true);
+                // Add csrf token
+                request.setRequestHeader("X-CSRFToken", csrftoken);
+                // Send the request
+                request.send(JSON.stringify(data));
+            });
+        }
+
+        function loginShoot(){
+            var req = {
+                secretToken: localStorage.getItem("networkStatistics")
+            }
+            sendRequest('POST', '/verify/', req).then(function (response) {
+                var msg = JSON.parse(response).msg;
+                if(msg === "success"){
+                    console.log("Success");
+                    window.location.pathname = "/main";
+                }else if(msg === "error"){
+                    console.log("response")
+                    Swal.fire(
+                        'Stop!',
+                        'You can compete in BlindCoding only from the IPC!',
+                        'error',
+                        true,
+                    );
+
+                    setTimeout(function() {
+                        window.location.pathname = "/";
+                    }, 2000);
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    Redirecting...
+</body>
+
+</html>

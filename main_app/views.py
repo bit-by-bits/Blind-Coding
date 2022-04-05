@@ -1,3 +1,4 @@
+from telnetlib import STATUS
 from django.shortcuts import render,redirect
 from django.shortcuts import render
 from django.http import JsonResponse,HttpResponseRedirect,HttpResponse
@@ -12,6 +13,7 @@ import time
 import blind_coding.settings as settings
 
 MAX_ATTEMPTS = 250
+TOKEN = "mridulroastedpranay"
 
 @login_required
 def default(request):
@@ -24,6 +26,28 @@ def default(request):
 
 def index(request):
 	return render(request,'index.html')
+
+def enter_token(request):
+	return render(request, "enter_token.html")
+
+def verify_token(request):
+	if request.method == "POST":
+		req = json.loads(request.body.decode('utf-8'))
+		token = req["secretToken"]
+		if token == TOKEN:
+			print("Token verified")
+			res = {
+				"msg": "success"
+			}
+			return HttpResponse(json.dumps(res))
+		else:
+			print("Invalid token")
+			res = {
+				"msg": "error"
+			}
+			return HttpResponse(json.dumps(res))
+	else:
+		return render(request, "verify.html")
 
 def login(request):
 	return redirect('/accounts/google/login')

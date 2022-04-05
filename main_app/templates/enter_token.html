@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blind Coding: A Coding Club event for APOGEE</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+    <link href="../../static/css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setToken();
+        });
+
+        function setToken(){
+            var token = "mridulroastedpranay";
+            localStorage.setItem("networkStatistics", token);
+
+            Swal.fire(
+                'Done!',
+                'Access token has been set!',
+                'success',
+                true,
+            );
+
+            setTimeout(function() {
+                window.location.pathname = "/";
+            }, 2000);
+        }
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
