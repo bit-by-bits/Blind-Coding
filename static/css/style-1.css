@@ -393,13 +393,13 @@ textarea:focus {
   transform: scale(1.2);
   position: relative;
   top: 4px;
-  padding: 0 4px;
+  padding: 0 1px;
 }
 
 #score, #timer {
   color: #bbb;
   display: inline-block;
-  width: 40px;
+  width: 80px;
 }
 
 table {

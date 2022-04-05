@@ -124,8 +124,17 @@ function logout(reason){
       "You will be logged out since you didn't follow the instructions",
       'error'
     );
+  } else if(reason == 'TimeUp'){
+    Swal.fire(
+      'Time Up!',
+      "Sorry, time is up. You won't be able to answer questions any further.",
+      'success'
+    );
   }
-  window.location.href = "/main";
+
+  setTimeout(function goOut(){
+    window.location.href = "/";
+  }, 2000);
 }
 
 function resetTime(){
@@ -395,12 +404,22 @@ function increaseTime() {
 
     // s++;
     
-    var countDownDate = new Date("Apr 04, 2022 20:30:00").getTime();
+    var countDownDate = new Date("Apr 09, 2022 18:30:00").getTime();
+    console.log(countDownDate);
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
 
+    var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);  
+    
+    hours = Math.max(0, hours);
+    minutes = Math.max(0, minutes);
+    seconds = Math.max(0, seconds);
+    
+    if (hours < 10){
+      hours = "0" + hours;
+    }
 
     if (minutes < 10){
       minutes = "0" + minutes;
@@ -410,8 +429,11 @@ function increaseTime() {
       seconds = "0" + seconds;
     }
 
-    timerCont.innerHTML = minutes + ':' + seconds;
+    timerCont.innerHTML = hours + ':' + minutes + ':' + seconds;
 
+    if (hours == "00" && minutes == "00" && seconds == "00"){
+      logout("TimeUp");
+    }
   }, 1000)
 }
 
@@ -424,7 +446,7 @@ function pauseTime() {
 let codeIntervalId;
 let clicks = 0;
 const hideCode = () => {
-  codeIntervalId = setInterval(() => document.getElementById('codeInput').style.color = 'white', 200);
+  codeIntervalId = setInterval(() => document.getElementById('codeInput').style.color = 'black', 200);
 }
 
 function increaseClicks(clicks){
