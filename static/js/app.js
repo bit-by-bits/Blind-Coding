@@ -32,6 +32,7 @@ $(document).ready(function() {
   increaseTime();
   hideCode();
   addResizeEvent();
+  tabOrWindowChange();
   showBtnInit();
   sideNavInit();
 });
@@ -48,6 +49,24 @@ function addResizeEvent(){
       logout('screen-resize')
     }
   }
+}
+
+function tabOrWindowChange(){
+  // setInterval( checkFocus, 200 );
+
+  // function checkFocus(){
+  //   if(document.hasFocus()==false){
+  //     logout('Focus Lost')
+  //   }
+  // }
+
+  document.addEventListener("visibilitychange", (event) => {
+    if (document.visibilityState == "visible") {
+    
+    } else {
+      logout("Focus Lost")
+    }
+  });
 }
 
 function leaderbInit(){
