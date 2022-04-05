@@ -113,6 +113,29 @@ body, html {
     background-color: rgba(57, 255, 216, 0.8);
 }
 
+.enter-button-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 3vw;
+}
+
+.enter-button-list {
+    font-size: 20px;
+    color: #f5f5f5;
+    padding: 10px 30px;
+    border-radius: 25px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 100ms linear;
+}
+
+.enter-button-list:hover {
+    background-color: rgba(57, 255, 216, 0.8);
+}
+
 #content {
     min-width: 70vw;
     min-height: 60vh;
