@@ -224,12 +224,15 @@ function runCode(){
 
   let time = m * 60 + s;
 
+  let loginEmail = document.getElementById("email").value;
+
   let program = {
     source_code : prog,
     language_id: langID,
     qNo: getQNum(),
     timeElapsed: time,
-    version: langVersion
+    version: langVersion,
+    email: loginEmail,
   };
   console.log(prog)
   document.getElementById("compilerOutput").innerText = "Running..."

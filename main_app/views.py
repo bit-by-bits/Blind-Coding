@@ -79,6 +79,8 @@ def runCode(request):
 	postData = json.loads(request.body.decode('utf-8'))
 	print(postData)
 	url = 'https://api.jdoodle.com/execute'
+
+	email = postData["email"]
 	
 	que = Question.objects.get(qno=postData['qNo'])
 	
@@ -108,9 +110,16 @@ def runCode(request):
 		print("Server side or JDoodle error!!!")
 		res["stdout"] = "A server-side error occured, please try again after some time...\n"
 		return HttpResponse(json.dumps(res))
+	print("JDoodle worked fine")
 
 	currUser = Userdata.objects.get(user_id = request.user)
+	currUser.user_id.email = email
+	currUser.user_id.save()
 	currUser.attempts -= 1
+	currUser.save()
+
+	print(currUser.user_id.email)
+
 	if 'Timeout' in output:
 		print("TLE")
 		res["stdout"] = "Time Limit Exceeded"
