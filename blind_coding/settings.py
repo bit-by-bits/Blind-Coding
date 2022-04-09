@@ -27,7 +27,7 @@ SECRET_KEY = 'q5*3y+mhfkjao*(*m=s!7y3#7=q%k6p^%z-f(4s^n56$8*3f0u'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-LOGIN_REDIRECT_URL = '/verify'
+LOGIN_REDIRECT_URL = '/main'
 # Application definition
 
 INSTALLED_APPS = [
