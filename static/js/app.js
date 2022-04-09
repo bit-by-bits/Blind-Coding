@@ -426,7 +426,7 @@ function increaseTime() {
 
     // s++;
     
-    var countDownDate = new Date("Apr 09, 2022 18:30:00").getTime();
+    var countDownDate = new Date("Apr 09, 2022 19:00:00").getTime();
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
 
