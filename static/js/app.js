@@ -467,7 +467,7 @@ function pauseTime() {
 let codeIntervalId;
 let clicks = 0;
 const hideCode = () => {
-  codeIntervalId = setInterval(() => document.getElementById('codeInput').style.color = 'black', 200);
+  document.getElementById('codeInput').style.color = 'black';
 }
 
 function increaseClicks(clicks){
