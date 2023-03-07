@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="icon" type="image/x-icon" href="../../static/assets/club-logo.svg">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blind Coding: A Coding Club event for APOGEE</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="../../static/assets/club-logo.svg">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Blind Coding: A Coding Club event for APOGEE</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
 	{% load static %}
 	<link rel="stylesheet" href="../../static/css/style-1.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,168 +16,220 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
-	<body>
-		<div class="hamburger">
-			<span class="line"></span>
-			<span class="line"></span>
-			<span class="line"></span>
-		</div>
-		<div id="sidenav">
-			<ul>
-				<li>
-					<span class="plus">
-						<span class="v-line"></span>
-						<span class="h-line"></span>
-					</span>
-					<a onclick="getQuestion(0)">Question 1</a>
-				</li>
-				<li>
-					<span class="plus">
-						<span class="v-line"></span>
-						<span class="h-line"></span>
-					</span>
-					<a onclick="getQuestion(1)">Question 2</a>
-				</li>
-				<li>
-					<span class="plus">
-						<span class="v-line"></span>
-						<span class="h-line"></span>
-					</span>
-					<a onclick="getQuestion(2)">Question 3</a>
-				</li>
-				<li>
-					<span class="plus">
-						<span class="v-line"></span>
-						<span class="h-line"></span>
-					</span>
-					<a onclick="getQuestion(3)">Question 4</a>
-				</li>
-				<li>
-					<span class="plus">
-						<span class="v-line"></span>
-						<span class="h-line"></span>
-					</span>
-					<a onclick="getQuestion(4)">Question 5</a>
-				</li>
-			</ul>
-		</div>
-		<div class="backdrop">
-		</div>
-		
-		<div class="instructions">
-			<div id="close" onclick="closeInstructions()">
-				<span class="horiz"></span>
-				<span class="verti"></span>
-			</div>
-			<h3>Instructions</h3>
-			<h5>- There are five questions of varying difficulties and points associated with them. <br> Score associated are 20, 40, 60, 80, 100 points respectively.</h5>
-			<h5>- For every question, the first time you submit the correct answer, you are awarded points corresponding to that question and the time penalty is 
-				also calculated which takes into consideration the time taken until last successful solve together with the number of wrong attempts</h5>
-			<h5>- You have 90 minutes to answer all questions. At the end of 90 minutes, you will be automatically logged out and the score obtained till that point will be saved.</h5>
-			<h5>- Standings will be based on the points scored and in cases of clashes, time penalties are compared and one with lesser time penalty is better ranker</h5>
-			<h5>- Every time you give a correct answer, your score will be updated after which you can move to the other questions.</h5>
-			<h5>- You have only 5 attempts throughout the event to see the code you have written. To see the code, press Show Code button near Run button. The code will be visible only for 5 seconds.</h5>
-			<h5>- Don't try to open up the console or changing the window/tab. You'll be logged out immediately</h5>
+
+<body>
+	<div class="hamburger">
+		<span class="line"></span>
+		<span class="line"></span>
+		<span class="line"></span>
+	</div>
+
+	<div id="sidenav">
+		<ul>
+			<li>
+				<span class="plus">
+					<span class="v-line"></span>
+					<span class="h-line"></span>
+				</span>
+				<a onclick="getQuestion(0)">Question 1</a>
+			</li>
+
+			<li>
+				<span class="plus">
+					<span class="v-line"></span>
+					<span class="h-line"></span>
+				</span>
+				<a onclick="getQuestion(1)">Question 2</a>
+			</li>
+
+			<li>
+				<span class="plus">
+					<span class="v-line"></span>
+					<span class="h-line"></span>
+				</span>
+				<a onclick="getQuestion(2)">Question 3</a>
+			</li>
+
+			<li>
+				<span class="plus">
+					<span class="v-line"></span>
+					<span class="h-line"></span>
+				</span>
+				<a onclick="getQuestion(3)">Question 4</a>
+			</li>
+
+			<li>
+				<span class="plus">
+					<span class="v-line"></span>
+					<span class="h-line"></span>
+				</span>
+				<a onclick="getQuestion(4)">Question 5</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="backdrop"></div>
+	<div class="instructions">
+		<div id="close" onclick="closeInstructions()">
+			<span class="horiz"></span>
+			<span class="verti"></span>
 		</div>
 
-		
-	  <nav id="header">
+		<h2>INSTRUCTIONS</h2>
+		<ul>
+			<li>
+				<h4>There are five questions of varying difficulties and points associated with them. Score associated
+					are 20, 40, 60, 80, 100 points respectively.</h4>
+			</li>
+
+			<li>
+				<h4>For every question, the first time you submit the correct answer, you are awarded points
+					corresponding to that question and the time penalty is also calculated which takes into
+					consideration the time taken until last successful solve together with the number of wrong attempts
+				</h4>
+			</li>
+
+			<li>
+				<h4>You have 90 minutes to answer all questions. At the end of 90 minutes, you will be automatically
+					logged out and the score obtained till that point will be saved.</h4>
+			</li>
+
+			<li>
+				<h4>Standings will be based on the points scored and in cases of clashes, time penalties are compared
+					and one with lesser time penalty is better ranker</h4>
+			</li>
+
+			<li>
+				<h4>Every time you give a correct answer, your score will be updated after which you can move to the
+					other
+					questions.</h4>
+			</li>
+
+			<li>
+				<h4>You have only 5 attempts throughout the event to see the code you have written. To see the code,
+					press Show
+					Code button near Run button. The code will be visible only for 5 seconds.</h4>
+			</li>
+		</ul>
+	</div>
+
+
+	<nav id="header">
 		<ul>
 			<li onclick="showInstructions()">Instructions</li>
 			<!-- <li>Contact</li> -->
-			<a href="/logout"><li>Logout</li></a>
+			<a href="/logout">
+				<li>Logout</li>
+			</a>
 		</ul>
-	  </nav> 
-	  <h3 class="title">Blind Coding</h3>
-	  <div id="main">
-		  	
-		  	<div class="qno"></div>
-			<div class="left">
-				<h5>Question 1</h5>
-					Loading.....
+	</nav>
+
+	<h3 class="title">Blind Coding</h3>
+	<div id="main">
+		<div class="qno"></div>
+		<div class="left">
+			<h4>Question 1</h4>
+			Loading.....
+		</div>
+
+		<div class="right">
+			<div class="language">
+				<div class="input-field col s12">
+					<select id="langSelect">
+						<option value="" disabled selected class="blue-text text-darken-2">Choose your language</option>
+					</select>
+				</div>
 			</div>
 
-			<div class="right">
-
-				<div class="language">
-					<div class="input-field col s12">
-						<select id="langSelect">
-							<option value="" disabled selected class="blue-text text-darken-2">Choose your language</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="editor ">
-					<textarea id="codeInput" class="no-copy-paste noselect" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="// Write your code here!"></textarea>
-				</div>
-
-				<div class="outputArea">
-					<textarea id="compilerOutput" class="no-copy-paste noselect" autocorrect="off" autocapitalize="off" spellcheck="false" disabled placeholder="// Output will be shown here when you click 'Run'!"></textarea>
-				</div>
-
-				<div style="color: white; width: 100%; display: flex;">
-					<p style="margin-left: 20%">Run Attempts Left :  <p id="run-attempts"> {{ userdata.attempts }}</p> <p style="margin-left: 5%">View Code Chances Left : <p id="view-chances"></p></p>
-				</div>
-
-				<div class="options">
-					{% if userdata.attempts <= maxAttempts %}
-						<button class="bttn" id="runBtn" onclick="runCode()">Run</button>
-					{% endif %}
-					{% if userdata.chancesUsed <= 5 %}
-						<button class="bttn" id="showCode" onclick="showCode()">Show Code</button>
-					{% endif %}
-				</div>
-
+			<div class="editor ">
+				<textarea id="codeInput" class="no-copy-paste noselect" autocorrect="off" autocapitalize="off"
+					spellcheck="false" placeholder="write your code here.."></textarea>
 			</div>
-	  </div>
-	  <div class="scoreboard">
-		<input id="email" width="400px" placeholder="Login Email" type="email" style="color: white; margin-right: 40px;" required>
+
+			<div class="outputArea">
+				<textarea id="compilerOutput" class="no-copy-paste noselect" autocorrect="off" autocapitalize="off"
+					spellcheck="false" disabled placeholder="click RUN to display any output.."></textarea>
+			</div>
+
+			<div class="options">
+				<div>
+					<p>Run Attempts Left :
+					<p id="run-attempts"> {{ userdata.attempts }}</p>
+					</pstyle=>
+				</div>
+
+				<div>
+					<p>View Code Chances Left :
+					<p id="view-chances"></p>
+					</p%>
+				</div>
+
+				{% if userdata.attempts <= maxAttempts %} <button class="bttn" id="runBtn" onclick="runCode()">Run
+					Code</button>
+					{% endif %}
+
+					{% if userdata.chancesUsed <= 5 %} <button class="bttn" id="showCode" onclick="showCode()">Show
+						Code</button>
+						{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="scoreboard">
+		<input id="email" placeholder="Login Email" type="email"
+			style="color: white; text-overflow: ellipsis; width: 400px" required>
 		<span><i class="material-icons">star_border</i><span id="score">00</span></span>
 		<span><i class="material-icons">timer</i><span id="timer">00:00:00</span></span>
-	  </div>
-	  <div class="leaderboard-icon">
+	</div>
+
+	<div class="leaderboard-icon">
 		<i class="material-icons li">insert_chart</i>
-	  </div>
-	  <div class="leaderboard">
-			<table>
-				<thead>
-					<tr>
-						<th class="rank hdrank">Rank (Your Rank: <span id="myrank"></span>)</th>
-						<th class="name">Name</th>
-						<th class="score">Points</th>
-					</tr>
-				</thead>
-				<tbody id="leaderboard-body">
-					<tr id="leaderboard-loader">
-						<th class="rank"></th>
-						<th class="name">Loading...</th>
-						<th class="score"></th>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-					  <th></th>
-					  <th id="userRank"></th>
-					</tr>
-				</tfoot>
-		  </table>
-	  </div>
-	  <div id="footer">
-			<p>&copy; Coding Club ,2019</p>
-			<img src="../../static/assets/logo.svg" class="club-logo">
-		</div>
-		<template id="leaderboard-row">
-			<tr>
-			  <td class="rank"></td>
-			  <td class="name"></td>
-			  <td class="score"></td>
-			</tr>
-		</template>
+	</div>
+
+	<div class="leaderboard">
+		<table>
+			<thead>
+				<tr>
+					<th class="rank hdrank">Rank (Your Rank: <span id="myrank">0</span>)</th>
+					<th class="name">Name</th>
+					<th class="score">Points</th>
+				</tr>
+			</thead>
+
+			<tbody id="leaderboard-body">
+				<tr id="leaderboard-loader">
+					<th class="rank"></th>
+					<th class="name">Loading...</th>
+					<th class="score"></th>
+				</tr>
+			</tbody>
+
+			<tfoot>
+				<tr>
+					<th></th>
+					<th id="userRank"></th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+	<div id="footer">
+		<p>&copy; Coding Club ,2019</p>
+		<img src="../../static/assets/logo.svg" class="club-logo">
+	</div>
+
+	<template id="leaderboard-row">
+		<tr>
+			<td class="rank"></td>
+			<td class="name"></td>
+			<td class="score"></td>
+		</tr>
+	</template>
+
 	<script src="/static/js/app.js"></script>
 	<script src="/static/js/script.js" type="text/javascript"></script>
 
-
-    <script>
+	<script>
 		!function () {
 			function detectDevTool(allow) {
 				if (isNaN(+allow)) allow = 100;
@@ -208,4 +261,5 @@
 		}();
 	</script>
 </body>
+
 </html>

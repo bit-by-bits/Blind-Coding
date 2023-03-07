@@ -10,10 +10,10 @@
     <link href="../../static/css/style.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             loginShoot();
             //countDown();
         });
@@ -23,26 +23,26 @@
             return v ? v[2] : null;
         }
 
-        function sendRequest(type, url, data){
+        function sendRequest(type, url, data) {
             let request = new XMLHttpRequest();
             let csrftoken = getCookie("csrftoken");
-            return new Promise(function(resolve, reject){
+            return new Promise(function (resolve, reject) {
                 request.onreadystatechange = () => {
                     if (request.readyState !== 4) return;
                     // Process the response
-                if (request.status >= 200 && request.status < 300) {
+                    if (request.status >= 200 && request.status < 300) {
                         // If successful
-                resolve(request.responseText);
-                } else {
-                // If failed
-                reject({
-                    status: request.status,
-                    statusText: request.statusText
-                });
-                }
+                        resolve(request.responseText);
+                    } else {
+                        // If failed
+                        reject({
+                            status: request.status,
+                            statusText: request.statusText
+                        });
+                    }
                 };
                 // Setup our HTTP request
-            request.open(type || "GET", url, true);
+                request.open(type || "GET", url, true);
                 // Add csrf token
                 request.setRequestHeader("X-CSRFToken", csrftoken);
                 // Send the request
@@ -50,16 +50,16 @@
             });
         }
 
-        function loginShoot(){
+        function loginShoot() {
             var req = {
                 secretToken: localStorage.getItem("networkStatistics")
             }
             sendRequest('POST', '/verify/', req).then(function (response) {
                 var msg = JSON.parse(response).msg;
-                if(msg === "success"){
+                if (msg === "success") {
                     console.log("Success");
                     window.location.pathname = "/main";
-                }else if(msg === "error"){
+                } else if (msg === "error") {
                     console.log("response")
                     Swal.fire(
                         'Stop!',
@@ -68,7 +68,7 @@
                         true,
                     );
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.pathname = "/";
                     }, 2000);
                 }
