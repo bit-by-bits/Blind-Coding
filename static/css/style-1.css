@@ -42,31 +42,45 @@ html {
   color: white;
   display: none;
   position: absolute;
-  width: 90vw;
-  height: 90vh;
+  width: 85vw;
+  height: 85vh;
   z-index: 10;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #000205;
-  background-image: url("../assets/gradient-1.svg");
+  background-image: url("https://e1.pxfuel.com/desktop-wallpaper/568/192/desktop-wallpaper-dark-blue-tech-circuit-board-technology-animated-background-video-graphic-design-background.jpg");
   background-position: center;
   background-size: cover;
   flex-direction: column;
   align-items: flex-start;
   padding: 10px 30px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 40px #190a24;
-  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 1px white;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
+.instructions h2 {
+  font-size: 2rem !important;
+  font-weight: bold;
+}
+
+.instructions ul {
+  list-style-type: circle !important;
+  overflow-y: auto;
+}
+
+.instructions ul li {
+  font-size: 1.2rem;
+}
+
 #close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 50px;
-  height: 50px;
+  position: fixed;
+  top: calc(5vw - 5vh);
+  right: calc(5vw - 5vh);
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,8 +91,8 @@ html {
 
 .horiz {
   display: block;
-  width: 4px;
-  height: 30px;
+  width: 2px;
+  height: 15px;
   background: white;
   position: absolute;
   transform: rotate(-45deg);
@@ -86,8 +100,8 @@ html {
 
 .verti {
   display: block;
-  width: 4px;
-  height: 30px;
+  width: 2px;
+  height: 15px;
   background: white;
   position: absolute;
   transform: rotate(45deg);
@@ -127,13 +141,12 @@ html {
   padding: 10px 30px;
   border-radius: 25px;
   margin: 5px;
-  cursor: pointer;
   transition: all 100ms linear;
   line-height: 100%;
 }
 
 #header ul li:hover {
-  background-color: #199ED7;
+  background-color: #199ed7;
 }
 
 nav#header ul a {
@@ -191,6 +204,7 @@ nav#header ul a {
 .options > div,
 .options .bttn {
   display: flex;
+  font-size: 1.1rem;
   width: 60% !important;
   min-width: max-content;
   justify-content: center;
@@ -202,7 +216,6 @@ button {
   font-size: 20px;
   padding: 15px 20px;
   width: 15vw;
-  /* min-height: 7vh; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +231,7 @@ button {
 }
 
 button:hover {
-  background-color: #199ED7;
+  background-color: #199ed7;
 }
 
 button:focus {
@@ -301,7 +314,7 @@ textarea:focus {
 .submit,
 #showCode {
   width: 10vw;
-  background-color: #199ED7;
+  background-color: #199ed7;
   transition: all 100ms ease-in 50ms;
 }
 
@@ -451,6 +464,7 @@ tr th {
   left: 3vh;
   z-index: 10;
 }
+
 .hamburger .line {
   margin-bottom: 8px;
   display: block;
@@ -459,6 +473,7 @@ tr th {
   border-radius: 100px;
   background: #fff;
 }
+
 .hamburger .line::after,
 .hamburger .line::before {
   content: "";
@@ -470,23 +485,29 @@ tr th {
   position: absolute;
   top: 0;
 }
+
 .hamburger .line::after {
   right: 0;
 }
+
 .hamburger .line::before {
   right: 12px;
 }
+
 .hamburger .line:nth-child(2)::after,
 .hamburger .line:nth-child(2)::before {
   top: 12px;
 }
+
 .hamburger .line:nth-child(3)::after,
 .hamburger .line:nth-child(3)::before {
   top: 24px;
 }
+
 .hamburger:hover .line {
   width: 100%;
 }
+
 .hamburger:hover .line:nth-child(2) {
   -webkit-transition-delay: 0.1s;
   -moz-transition-delay: 0.1s;
@@ -494,6 +515,7 @@ tr th {
   -o-transition-delay: 0.1s;
   transition-delay: 0.1s;
 }
+
 .hamburger:hover .line:nth-child(3) {
   -webkit-transition-delay: 0.2s;
   -moz-transition-delay: 0.2s;
@@ -501,13 +523,16 @@ tr th {
   -o-transition-delay: 0.2s;
   transition-delay: 0.2s;
 }
+
 .hamburger.active .line {
   width: 100%;
 }
+
 .hamburger.active .line::before,
 .hamburger.active .line::after {
   opacity: 0;
 }
+
 .hamburger.active .line:nth-child(1) {
   -webkit-transform: translate(0, 12px) rotate(45deg);
   -moz-transform: translate(0, 12px) rotate(45deg);
@@ -515,6 +540,7 @@ tr th {
   -ms-transform: translate(0, 12px) rotate(45deg);
   transform: translate(0, 12px) rotate(45deg);
 }
+
 .hamburger.active .line:nth-child(2) {
   -webkit-transform: translate(0, 0) rotate(-45deg);
   -moz-transform: translate(0, 0) rotate(-45deg);
@@ -522,9 +548,11 @@ tr th {
   -ms-transform: translate(0, 0) rotate(-45deg);
   transform: translate(0, 0) rotate(-45deg);
 }
+
 .hamburger.active .line:nth-child(3) {
   opacity: 0;
 }
+
 .hamburger.active:hover .line:nth-child(2),
 .hamburger.active:hover .line:nth-child(3) {
   -webkit-transition-delay: 0s;
@@ -608,8 +636,12 @@ a {
   cursor: pointer;
 }
 
+#header ul a {
+  margin-right: 1rem;
+}
+
 #header ul a li:hover {
-  background-color: #D03644;
+  background-color: #d03644;
 }
 
 #codeInput {

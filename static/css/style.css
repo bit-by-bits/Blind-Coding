@@ -26,20 +26,19 @@ html {
   color: white;
   display: none;
   position: absolute;
-  width: 90vw;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   z-index: 10;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #000205;
-  background-image: url("../assets/gradient-1.svg");
+  background-image: url("https://e1.pxfuel.com/desktop-wallpaper/568/192/desktop-wallpaper-dark-blue-tech-circuit-board-technology-animated-background-video-graphic-design-background.jpg");
   background-position: center;
   background-size: cover;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 30px;
   border-radius: 5px;
   box-shadow: 1px 1px 40px #190a24;
   overflow-y: auto;
@@ -52,7 +51,7 @@ html {
 #close {
   position: fixed;
   top: calc(5vw - 5vh);
-  right: 0;
+  right: calc(5vw - 5vh);
   width: 30px;
   height: 30px;
   display: flex;
@@ -94,7 +93,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3rem;
+  padding: 0 100px;
 }
 
 #header ul > div {
@@ -114,7 +113,7 @@ html {
 }
 
 #header ul li:hover {
-  background-color: #199ED7;
+  background-color: #199ed7;
 }
 
 .enter-button-list {
@@ -137,7 +136,7 @@ html {
 }
 
 .enter-button-list:hover {
-  background-color: #199ED7;
+  background-color: #199ed7;
 }
 
 #content {
@@ -178,7 +177,7 @@ html {
 }
 
 #content button:hover {
-  background-color: #199ED7;
+  background-color: #199ed7;
 }
 
 #content button:focus {
@@ -209,7 +208,8 @@ html {
 
 /* br:nth-child(2) {
     display: none;
-} */
+}
+ */
 
 #event-logo {
   position: relative;
