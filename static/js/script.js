@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function countDown() {
   setInterval(function () {
-    var countDownDate = new Date("Apr 01, 2023 00:00:00").getTime();
+    var countDownDate = new Date("Apr 03, 2023 00:00:00").getTime();
     // console.log(countDownDate);
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
