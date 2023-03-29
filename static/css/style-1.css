@@ -146,6 +146,7 @@ html {
 }
 
 #header ul li:hover {
+  cursor: pointer;
   background-color: #199ed7;
 }
 
