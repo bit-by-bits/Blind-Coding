@@ -5,13 +5,59 @@ let ctrlKey = 17,
   cKey = 67;
 let qNo = 0;
 
-let languageIDs = JSON.parse(
-  '[\n  {\n    "id": "java",\n    "name": "Java JDK 17.0.1",\n    "version": 4\n  },\n {\n    "id": "nodejs",\n    "name": "JavaScript",\n    "version": 4\n  },\n  {\n    "id": "c",\n    "name": "C GCC 9.1.0",\n    "version": 4\n  },\n  {\n    "id": "cpp",\n    "name": "C++ GCC 9.1.0",\n    "version": 4\n  },\n  {\n    "id": "cpp14",\n    "name": "C++ 14 GCC 9.1.0",\n    "version": 3\n  },\n  {\n    "id": "cpp17",\n    "name": "C++ 17 GCC 9.1.0",\n    "version": 0\n  },\n  {\n    "id": "cpp",\n    "name": "C++ GCC 9.1.0",\n    "version": 4\n  },\n  {\n    "id": "python3",\n    "name": "Python 3.6.5",\n    "version": 2\n  },\n  {\n    "id": "ruby",\n    "name": "Ruby 3.0.2",\n    "version": 4\n  },\n  {\n    "id": "go",\n    "name": "GoLang 1.17.3",\n    "version": 4\n  },\n  {\n    "id": "scala",\n    "name": "Scala 2.13.6",\n    "version": 4\n  },\n  {\n    "id": "bash",\n    "name": "Bash Shell 5.1.12",\n    "version": 4\n  },\n  {\n    "id": "csharp",\n    "name": "C# mono-6.12.0",\n    "version": 4\n  },\n  {\n    "id": "rust",\n    "name": "Rust 1.56.1",\n    "version": 4\n  },\n  {\n    "id": "dart",\n    "name": "Dart 2.14.4",\n    "version": 4\n  },\n  {\n    "id": "nasm",\n    "name": "NASM 2.15.05",\n    "version": 4\n  },\n  {\n    "id": "kotlin",\n    "name": "Kotlin 1.6.0 (JRE 17.0.1+12)",\n    "version": 3\n  }\n]'
-);
+let languageIDs = [
+  { id: 45, name: "Assembly (NASM 2.14.02)" },
+  { id: 46, name: "Bash (5.0.0)" },
+  { id: 47, name: "Basic (FBC 1.07.1)" },
+  { id: 75, name: "C (Clang 7.0.1)" },
+  { id: 76, name: "C++ (Clang 7.0.1)" },
+  { id: 48, name: "C (GCC 7.4.0)" },
+  { id: 52, name: "C++ (GCC 7.4.0)" },
+  { id: 49, name: "C (GCC 8.3.0)" },
+  { id: 53, name: "C++ (GCC 8.3.0)" },
+  { id: 50, name: "C (GCC 9.2.0)" },
+  { id: 54, name: "C++ (GCC 9.2.0)" },
+  { id: 86, name: "Clojure (1.10.1)" },
+  { id: 51, name: "C# (Mono 6.6.0.161)" },
+  { id: 77, name: "COBOL (GnuCOBOL 2.2)" },
+  { id: 55, name: "Common Lisp (SBCL 2.0.0)" },
+  { id: 56, name: "D (DMD 2.089.1)" },
+  { id: 57, name: "Elixir (1.9.4)" },
+  { id: 58, name: "Erlang (OTP 22.2)" },
+  { id: 44, name: "Executable" },
+  { id: 87, name: "F# (.NET Core SDK 3.1.202)" },
+  { id: 59, name: "Fortran (GFortran 9.2.0)" },
+  { id: 60, name: "Go (1.13.5)" },
+  { id: 88, name: "Groovy (3.0.3)" },
+  { id: 61, name: "Haskell (GHC 8.8.1)" },
+  { id: 62, name: "Java (OpenJDK 13.0.1)" },
+  { id: 63, name: "JavaScript (Node.js 12.14.0)" },
+  { id: 78, name: "Kotlin (1.3.70)" },
+  { id: 64, name: "Lua (5.3.5)" },
+  { id: 89, name: "Multi-file program" },
+  { id: 79, name: "Objective-C (Clang 7.0.1)" },
+  { id: 65, name: "OCaml (4.09.0)" },
+  { id: 66, name: "Octave (5.1.0)" },
+  { id: 67, name: "Pascal (FPC 3.0.4)" },
+  { id: 85, name: "Perl (5.28.1)" },
+  { id: 68, name: "PHP (7.4.1)" },
+  { id: 43, name: "Plain Text" },
+  { id: 69, name: "Prolog (GNU Prolog 1.4.5)" },
+  { id: 70, name: "Python (2.7.17)" },
+  { id: 71, name: "Python (3.8.1)" },
+  { id: 80, name: "R (4.0.0)" },
+  { id: 72, name: "Ruby (2.7.0)" },
+  { id: 73, name: "Rust (1.40.0)" },
+  { id: 81, name: "Scala (2.13.2)" },
+  { id: 82, name: "SQL (SQLite 3.27.2)" },
+  { id: 83, name: "Swift (5.2.3)" },
+  { id: 74, name: "TypeScript (3.7.4)" },
+  { id: 84, name: "Visual Basic.Net (vbnc 0.0.0.5943)" },
+];
 
 let timerCont = document.getElementById("timer");
-let s = 0,
-  m = 0;
+let s = 0;
+let m = 0;
 let timerId;
 const _totalNumQues = 5;
 let codeMap = new Map();
@@ -38,7 +84,6 @@ $(document).ready(function () {
   addResizeEvent();
   tabOrWindowChange();
   showBtnInit();
-  sideNavInit();
 });
 
 function showBtnInit() {
@@ -56,14 +101,6 @@ function addResizeEvent() {
 }
 
 function tabOrWindowChange() {
-  // setInterval( checkFocus, 200 );
-
-  // function checkFocus(){
-  //   if(document.hasFocus()==false){
-  //     logout('Focus Lost')
-  //   }
-  // }
-
   document.addEventListener("visibilitychange", (event) => {
     if (document.visibilityState == "visible") {
     } else {
@@ -79,7 +116,7 @@ function leaderbInit() {
     if (i === 0) {
       $(".li").html("cancel");
       i = 1;
-      getLeaderboard();
+      // getLeaderboard();
       // insert_chart
     } else {
       $(".li").html("insert_chart");
@@ -87,6 +124,7 @@ function leaderbInit() {
     }
   });
 }
+
 function disableCopyPaste() {
   var inp = document.getElementsByClassName("noselect")[0];
   inp.addEventListener(
@@ -123,12 +161,12 @@ function disableCopyPaste() {
 }
 
 function populateLangs() {
-  console.log("populating languages...");
+  console.log("Populating Languages");
 
   let selectField = document.getElementById("langSelect");
   for (element of languageIDs) {
     var opt = document.createElement("option");
-    opt.value = element["id"] + ";" + element["version"];
+    opt.value = element["id"] + ";";
     opt.innerHTML = element["name"];
     selectField.appendChild(opt);
   }
@@ -208,22 +246,16 @@ function enableRun() {
 function runCode() {
   disableRun();
   pauseTime();
+
   console.log(`Time elapsed is: ${m} minutes and ${s} seconds`);
 
   let prog = getCode();
-
   let lang = getLanguage();
+
   let langInfo = lang.split(";");
   let langID = langInfo[0];
-  let langVersion = langInfo[1];
-
-  if (langVersion == undefined || langVersion == null) {
-    Swal.fire("Stop!", "Please select a language to run your code in", "error");
-    return;
-  }
 
   let time = m * 60 + s;
-
   let loginEmail = document.getElementById("email").value;
 
   let program = {
@@ -231,9 +263,9 @@ function runCode() {
     language_id: langID,
     qNo: getQNum(),
     timeElapsed: time,
-    version: langVersion,
     email: loginEmail,
   };
+
   console.log(prog);
   document.getElementById("compilerOutput").innerText = "Running...";
 
@@ -243,9 +275,11 @@ function runCode() {
 
       response = JSON.parse(response);
       console.log("Compiler Call Response: ", response);
+
       setOutput(response["stdout"]);
       setScore(response["score"]);
       setRunAttempts(response["runAttempts"]);
+
       if (getOutput() == "Correct Answer") {
         if (response["completedGame"] == "true") {
           Swal.fire(
@@ -259,6 +293,7 @@ function runCode() {
         increaseQNum();
         getQuestion(qNo);
       }
+
       increaseTime();
       enableRun();
     })
@@ -277,6 +312,7 @@ function getCookie(name) {
 function sendRequest(type, url, data) {
   let request = new XMLHttpRequest();
   let csrftoken = getCookie("csrftoken");
+
   return new Promise(function (resolve, reject) {
     request.onreadystatechange = () => {
       if (request.readyState !== 4) return;
@@ -292,6 +328,7 @@ function sendRequest(type, url, data) {
         });
       }
     };
+
     // Setup our HTTP request
     request.open(type || "GET", url, true);
     // Add csrf token
@@ -303,6 +340,7 @@ function sendRequest(type, url, data) {
 
 function getQuestion(queNum) {
   codeMap.set(qNo, getCode());
+
   sendRequest("POST", "/question/", { queNum })
     .then(function (response) {
       response = JSON.parse(response);
@@ -314,15 +352,11 @@ function getQuestion(queNum) {
       }
       let que =
         response["question"] +
-        "<br><br>" +
-        "Sample Input" +
-        "<br>" +
+        "<br><br> Sample Input <br>" +
         response["sampTCNum"] +
         "<br>" +
         inStr +
-        "<br><br>" +
-        "Sample Output" +
-        "<br>" +
+        "<br><br> Sample Output <br>" +
         response["sampleOut"];
       document.getElementsByClassName("qno")[0].innerHTML =
         "Q. " + (queNum + 1);
@@ -331,6 +365,9 @@ function getQuestion(queNum) {
       document.getElementById("score").innerHTML = response["userScore"];
       var s = document.getElementById("codeInput");
       s.value = codeMap.get(queNum);
+
+      const input = document.querySelector("#menuToggle input");
+      input.checked = false;
     })
     .catch(function (error) {
       increaseTime();
@@ -380,54 +417,10 @@ $(document).delegate("#codeInput", "keydown", function (e) {
   }
 });
 
-function sideNavInit() {
-  let hamburger = document.querySelector(".hamburger");
-  const title = document.querySelector(".title");
-
-  // Side-nav event handler
-  hamburger.onclick = function (e) {
-    e.preventDefault;
-    if (hamburger.classList.contains("active")) {
-      hamburger.classList.remove("active");
-      hamburger.style.transform = "translateX(0)";
-      document.getElementById("sidenav").style.transform = "translateX(-100%)";
-      title.style.left = "calc(3vh + 50px)";
-    } else {
-      hamburger.classList.add("active");
-      hamburger.style.transform = "translateX(21vw)";
-      document.getElementById("sidenav").style.transform = "translateX(0)";
-      title.style.left = "3vh";
-    }
-  };
-}
-
 function increaseTime() {
   timerId = setInterval(function () {
-    // if (s > 59){
-    //   s -= 60;
-    //   m += 1;
-    // }
-
-    // if (m < 10) {
-    //   if (s < 10) {
-    //     timerCont.innerHTML = '0' + m + ':0' + s;
-    //   }
-    //   else {
-    //     timerCont.innerHTML = '0' + m + ':' + s;
-    //   }
-    // }
-    // else {
-    //   if (s < 10) {
-    //     timerCont.innerHTML = m + ':0' + s;
-    //   }
-    //   else {
-    //     timerCont.innerHTML = + m + ':' + s;
-    //   }
-    // }
-
-    // s++;
-
     var countDownDate = new Date("Apr 03, 2023 00:00:00").getTime();
+
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
 
@@ -455,20 +448,19 @@ function increaseTime() {
 
     timerCont.innerHTML = hours + ":" + minutes + ":" + seconds;
 
-    if (hours == "00" && minutes == "00" && seconds == "00") {
-      logout("TimeUp");
-    }
+    if (hours == "00" && minutes == "00" && seconds == "00") logout("TimeUp");
   }, 1000);
 }
 
 // Pause time function
 function pauseTime() {
-  // clearInterval(timerId);
+  clearInterval(timerId);
 }
 
 // Won't allow user to cheat by changing text-color
 let codeIntervalId;
 let clicks = 0;
+
 const hideCode = () => {
   document.getElementById("codeInput").style.color = "black";
 };
@@ -478,6 +470,7 @@ function increaseClicks(clicks) {
   let data = {
     clicks: clicks + 1,
   };
+
   sendRequest("POST", "/increaseClicks/", data)
     .then(function (response) {
       increaseTime();
@@ -490,6 +483,7 @@ function increaseClicks(clicks) {
 
 const showCode = () => {
   pauseTime();
+
   sendRequest("GET", "/getChancesUsed/", null)
     .then(function (response) {
       response = JSON.parse(response);
@@ -498,6 +492,7 @@ const showCode = () => {
         0,
         4 - clicks
       );
+
       console.log(clicks);
       const box = document.getElementById("codeInput");
       if (box.disabled === false) {
@@ -521,6 +516,7 @@ const showCode = () => {
             document.getElementById("showCode").disabled = false;
           }, 5000);
         }
+
         increaseClicks(clicks);
       }
     })
@@ -530,6 +526,7 @@ const showCode = () => {
       console.error(error);
     });
 };
+
 $(document).ready(function () {
   $("select").formSelect();
 });

@@ -18,55 +18,37 @@
 </head>
 
 <body>
-	<div class="hamburger">
-		<span class="line"></span>
-		<span class="line"></span>
-		<span class="line"></span>
-	</div>
+	<aside role="navigation">
+		<div id="menuToggle">
+				<input type="checkbox" />
+				<span class="lever"></span>
+				<span class="lever"></span>
+				<span class="lever"></span>
 
-	<div id="sidenav">
-		<ul>
-			<li>
-				<span class="plus">
-					<span class="v-line"></span>
-					<span class="h-line"></span>
-				</span>
-				<a onclick="getQuestion(0)">Question 1</a>
-			</li>
+			<ul id="menu">
+				<a onclick="getQuestion(0)">
+					<li> Question 1 </li>
+				</a>
 
-			<li>
-				<span class="plus">
-					<span class="v-line"></span>
-					<span class="h-line"></span>
-				</span>
-				<a onclick="getQuestion(1)">Question 2</a>
-			</li>
+				<a onclick="getQuestion(1)">
+					<li> Question 2</li>
+				</a>
 
-			<li>
-				<span class="plus">
-					<span class="v-line"></span>
-					<span class="h-line"></span>
-				</span>
-				<a onclick="getQuestion(2)">Question 3</a>
-			</li>
+				<a onclick="getQuestion(2)">
+					<li> Question 3</li>
+				</a>
 
-			<li>
-				<span class="plus">
-					<span class="v-line"></span>
-					<span class="h-line"></span>
-				</span>
-				<a onclick="getQuestion(3)">Question 4</a>
-			</li>
+				<a onclick="getQuestion(3)">
+					<li> Question 4</li>
+				</a>
 
-			<li>
-				<span class="plus">
-					<span class="v-line"></span>
-					<span class="h-line"></span>
-				</span>
-				<a onclick="getQuestion(4)">Question 5</a>
-			</li>
-		</ul>
-	</div>
+				<a onclick="getQuestion(4)">
+					<li> Question 5</li>
+				</a>
+
+			</ul>
+		</div>
+	</aside>
 
 	<div class="backdrop"></div>
 	<div class="instructions">
@@ -182,9 +164,9 @@
 		<span><i class="material-icons">timer</i><span id="timer">00:00:00</span></span>
 	</div>
 
-	<div class="leaderboard-icon">
+	<!-- <div class="leaderboard-icon">
 		<i class="material-icons li">insert_chart</i>
-	</div>
+	</div> -->
 
 	<div class="leaderboard">
 		<table>

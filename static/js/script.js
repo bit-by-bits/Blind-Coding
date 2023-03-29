@@ -38,7 +38,7 @@ function countDown() {
         "<a href='/login'><li>Enter</li></a>";
     }
   }, 1000);
-}
+} 
 
 function getLeaderboard() {
   $.ajax({
