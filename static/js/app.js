@@ -428,11 +428,12 @@ $(document).delegate("#codeInput", "keydown", function (e) {
 });
 
 function increaseTime() {
-  timerId = setInterval(function () {
-    var countDownDate = new Date("Apr 03, 2023 00:00:00").getTime();
+  const INITIAL_TIME = 1.5 * 60 * 60 * 1000;
+  var timeElapsed = 0;
 
-    var now = new Date().getTime();
-    var timeleft = countDownDate - now;
+  timerId = setInterval(function () {
+    timeElapsed += 1000;
+    var timeleft = INITIAL_TIME - timeElapsed;
 
     var hours = Math.floor(
       (timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
