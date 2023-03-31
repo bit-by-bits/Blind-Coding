@@ -1,9 +1,9 @@
 let ctrlDown = false;
+let qNo = 0;
 let ctrlKey = 17,
   cmdKey = 91,
   vKey = 86,
   cKey = 67;
-let qNo = 0;
 
 let languageIDs = [
   { id: 45, name: "Assembly (NASM 2.14.02)" },
@@ -137,16 +137,13 @@ function disableCopyPaste() {
   document.addEventListener("contextmenu", (event) => event.preventDefault());
   $(document)
     .keydown(function (e) {
-      // console.log('Key pressed: ', e.keyCode);
       if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
     })
     .keyup(function (e) {
-      // console.log('Key released: ', e.keyCode);
       if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
     });
 
   $(".no-copy-paste").keydown(function (e) {
-    // console.log('Key pressed inside editor: ', e.keyCode);
     if (ctrlDown && e.keyCode == cKey) {
       console.log("Document catch Ctrl+C");
     }
@@ -154,7 +151,6 @@ function disableCopyPaste() {
       console.log("Document catch Ctrl+V");
     }
     if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) {
-      // console.log('copy-paste');
       return false;
     }
   });
@@ -190,6 +186,12 @@ function logout(reason) {
       "Time Up!",
       "Sorry, time is up. You won't be able to answer questions any further.",
       "success"
+    );
+  } else if (reason == "no-account") {
+    Swal.fire(
+      "Oops",
+      "Seems you have not logged in. Please login to access the game.",
+      "error"
     );
   }
 
@@ -269,39 +271,47 @@ function runCode() {
   console.log(prog);
   document.getElementById("compilerOutput").innerText = "Running...";
 
-  sendRequest("POST", "/runCode/", program)
-    .then(function (response) {
-      console.log(program);
+  if (langID == "")
+    Swal.fire(
+      "Could Not Run Code",
+      "Seems you have not selected a language. Please select a language to continue.",
+      "error"
+    );
+  else
+    sendRequest("POST", "/runCode/", program)
+      .then(function (response) {
+        console.log(program);
 
-      response = JSON.parse(response);
-      console.log("Compiler Call Response: ", response);
+        response = JSON.parse(response);
+        console.log("Compiler Call Response: ", response);
 
-      setOutput(response["stdout"]);
-      setScore(response["score"]);
-      setRunAttempts(response["runAttempts"]);
+        setOutput(response["stdout"]);
+        setScore(response["score"]);
+        setRunAttempts(response["runAttempts"]);
 
-      if (getOutput() == "Correct Answer") {
-        if (response["completedGame"] == "true") {
-          Swal.fire(
-            "Congrats!",
-            "You have correctly answered all questions!",
-            "success"
-          );
-          logout("Finished");
+        if (getOutput() == "Correct Answer") {
+          if (response["completedGame"] == "true") {
+            Swal.fire(
+              "Congrats!",
+              "You have correctly answered all questions!",
+              "success"
+            );
+            logout("Finished");
+          }
+          resetTime();
+          increaseQNum();
+          getQuestion(qNo);
         }
-        resetTime();
-        increaseQNum();
-        getQuestion(qNo);
-      }
 
-      increaseTime();
-      enableRun();
-    })
-    .catch(function (error) {
-      increaseTime();
-      enableRun();
-      console.error(error);
-    });
+        increaseTime();
+        enableRun();
+      })
+      .catch(function (error) {
+        increaseTime();
+        enableRun();
+
+        console.error(error);
+      });
 }
 
 function getCookie(name) {
