@@ -362,11 +362,11 @@ function getQuestion(queNum) {
       }
       let que =
         response["question"] +
-        "<br><br> Sample Input <br>" +
-        response["sampTCNum"] +
-        "<br>" +
+        "<br><br><strong>Sample Input</strong><br>" +
         inStr +
-        "<br><br> Sample Output <br>" +
+        "<br><br><strong>Test Cases</strong><br> " +
+        response["sampTCNum"] +
+        "<br><br><strong>Sample Output</strong><br>" +
         response["sampleOut"];
       document.getElementsByClassName("qno")[0].innerHTML =
         "Q. " + (queNum + 1);
