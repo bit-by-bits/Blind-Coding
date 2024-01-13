@@ -26,7 +26,7 @@ SECRET_KEY = 'q5*3y+mhfkjao*(*m=s!7y3#7=q%k6p^%z-f(4s^n56$8*3f0u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['35.192.79.84']
 LOGIN_REDIRECT_URL = '/main'
 # Application definition
 
